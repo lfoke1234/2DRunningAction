@@ -34,5 +34,10 @@ public class PlayerGroundState : PlayerState
                 stateMachine.ChangeState(player.jumpState);
         }
 
+        if (Input.GetKey(KeyCode.S) && player.IsGroundDetected())
+        {
+            stateMachine.ChangeState(player.slidingState);
+        }
+
     }
 }

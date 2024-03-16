@@ -14,6 +14,10 @@ public class Entity : MonoBehaviour
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckDistance;
 
+
+    public float facingDir { get; private set; } = 1;
+    protected bool facingRight = true;
+
     protected virtual void Awake()
     {
 
@@ -35,6 +39,36 @@ public class Entity : MonoBehaviour
 
     }
 
+    #region Flip
+    public void Flip()
+    {
+        facingDir = facingDir * -1;
+        facingRight = !facingRight;
+        transform.Rotate(0, 180, 0);
+    }
+
+    public virtual void FlipController(float _x)
+    {
+        if (_x > 0 && !facingRight)
+        {
+            Flip();
+        }
+        else if (_x < 0 && facingRight)
+        {
+            Flip();
+        }
+    }
+
+    public virtual void SetupDefaultFacingDir(int _direction)
+    {
+        facingDir = _direction;
+
+        if (facingDir == -1)
+            facingRight = false;
+    }
+    #endregion
+
+    #region Velocity
     public void SetVelocity(float _xVeolcity, float _yVeolcity)
     {
         rb.velocity = new Vector2(_xVeolcity, _yVeolcity);
@@ -44,6 +78,7 @@ public class Entity : MonoBehaviour
     {
         rb.velocity = new Vector2(0, 0);
     }
+    #endregion
 
     #region Check Layer
 

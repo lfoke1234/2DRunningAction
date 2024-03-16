@@ -18,6 +18,7 @@ public class Player : Entity
     public PlayerRunState runState { get; private set; }
     public PlayerJumpState jumpState { get; private set; }
     public PlayerAirState airState { get; private set; }
+    public PlayerSlidingState slidingState { get; private set; }
     #endregion
 
     protected override void Awake()
@@ -28,6 +29,7 @@ public class Player : Entity
         runState = new PlayerRunState(this, stateMachine, "Run");
         jumpState = new PlayerJumpState(this, stateMachine, "Jump");
         airState = new PlayerAirState(this, stateMachine, "Jump");
+        slidingState = new PlayerSlidingState(this, stateMachine, "Sliding");
     }
 
     protected override void Start()
