@@ -12,6 +12,7 @@ public class PlayerGroundState : PlayerState
     {
         base.Enter();
         player.hasJump = false;
+        player.hasSecondJump = false;
     }
 
     public override void Exit()

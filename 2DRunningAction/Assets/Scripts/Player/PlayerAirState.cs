@@ -28,5 +28,10 @@ public class PlayerAirState : PlayerState
 
         if (player.IsGroundDetected())
             stateMachine.ChangeState(player.runState);
+
+        if (player.hasSecondJump == false && Input.GetKeyDown(KeyCode.Space))
+        {
+            stateMachine.ChangeState(player.secondJumpState);
+        }
     }
 }

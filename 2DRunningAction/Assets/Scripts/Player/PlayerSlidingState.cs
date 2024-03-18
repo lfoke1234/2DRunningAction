@@ -32,5 +32,10 @@ public class PlayerSlidingState : PlayerGroundState
         {
             stateMachine.ChangeState(player.runState);
         }
+
+        if (player.IsGroundDetected() == false)
+        {
+            stateMachine.ChangeState(player.airState);
+        }
     }
 }

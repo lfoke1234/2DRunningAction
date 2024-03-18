@@ -13,8 +13,8 @@ public class Entity : MonoBehaviour
     [SerializeField] private LayerMask isGround;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckDistance;
-
-
+    [SerializeField] private Transform wallCheck;
+    [SerializeField] private Vector2 wallCheckSize;
     public float facingDir { get; private set; } = 1;
     protected bool facingRight = true;
 
@@ -84,6 +84,8 @@ public class Entity : MonoBehaviour
 
     public virtual bool IsGroundDetected() => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, isGround);
 
+    public virtual bool IsWallDetected() => Physics2D.BoxCast(wallCheck.position, wallCheckSize, 0, Vector2.right * facingDir, 0, isGround);
+
     #endregion
 
 
@@ -91,6 +93,6 @@ public class Entity : MonoBehaviour
     {
         Gizmos.color = Color.green;
         Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));
-
+        Gizmos.DrawWireCube(wallCheck.position, wallCheckSize);
     }
 }

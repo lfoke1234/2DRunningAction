@@ -31,5 +31,11 @@ public class PlayerJumpState : PlayerState
     public override void Update()
     {
         base.Update();
+        
+
+        if (player.hasSecondJump == false && Input.GetKeyDown(KeyCode.Space))
+        {
+            stateMachine.ChangeState(player.secondJumpState);
+        }
     }
 }
