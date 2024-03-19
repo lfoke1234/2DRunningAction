@@ -1,9 +1,11 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering;
 
 public class PlayerSlidingState : PlayerGroundState
 {
+
     public PlayerSlidingState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -33,9 +35,9 @@ public class PlayerSlidingState : PlayerGroundState
             stateMachine.ChangeState(player.runState);
         }
 
-        if (player.IsGroundDetected() == false)
+        if (triggerCalled)
         {
-            stateMachine.ChangeState(player.airState);
+            stateMachine.ChangeState(player.slidingState);
         }
     }
 }

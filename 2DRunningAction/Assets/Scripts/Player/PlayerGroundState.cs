@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class PlayerGroundState : PlayerState
@@ -38,6 +39,11 @@ public class PlayerGroundState : PlayerState
         if (Input.GetKey(KeyCode.S) && player.IsGroundDetected())
         {
             stateMachine.ChangeState(player.slidingState);
+        }
+
+        if(player.IsGroundDetected() == false)
+        {
+            stateMachine.ChangeState(player.airState);
         }
 
     }

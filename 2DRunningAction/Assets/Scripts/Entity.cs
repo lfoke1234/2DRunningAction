@@ -80,6 +80,8 @@ public class Entity : MonoBehaviour
     }
     #endregion
 
+    
+
     #region Check Layer
 
     public virtual bool IsGroundDetected() => Physics2D.Raycast(groundCheck.position, Vector2.down, groundCheckDistance, isGround);

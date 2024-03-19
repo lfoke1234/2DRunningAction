@@ -26,6 +26,11 @@ public class PlayerJumpState : PlayerState
         {
             stateMachine.ChangeState(player.airState);
         }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            player.SetVelocity(rb.velocity.x, rb.velocity.y - player.fallPower);
+        }
     }
 
     public override void Update()

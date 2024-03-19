@@ -33,5 +33,10 @@ public class PlayerAirState : PlayerState
         {
             stateMachine.ChangeState(player.secondJumpState);
         }
+
+        if (Input.GetKey(KeyCode.S))
+        {
+            player.SetVelocity(rb.velocity.x, rb.velocity.y - player.fallPower);
+        }
     }
 }
