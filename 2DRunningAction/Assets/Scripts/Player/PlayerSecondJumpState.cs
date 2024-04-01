@@ -37,6 +37,11 @@ public class PlayerSecondJumpState : PlayerState
     public override void Update()
     {
         base.Update();
+
+        if(player.CanClimb() && !player.IsWallDetected())
+        {
+            stateMachine.ChangeState(player.climbState);
+        }
     }
 
 }

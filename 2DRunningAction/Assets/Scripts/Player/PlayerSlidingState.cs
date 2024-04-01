@@ -1,10 +1,8 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.Rendering;
 
 public class PlayerSlidingState : PlayerGroundState
 {
+
 
     public PlayerSlidingState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -13,11 +11,15 @@ public class PlayerSlidingState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
+        player.cd.size = slidingSize;
+        player.cd.offset = slidingOffset;
     }
 
     public override void Exit()
     {
         base.Exit();
+        player.cd.size = originalSize;
+        player.cd.offset = originalOffset;
     }
 
     public override void FixedUpdate()

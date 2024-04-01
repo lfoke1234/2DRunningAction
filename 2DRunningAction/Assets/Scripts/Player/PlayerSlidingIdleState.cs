@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class PlayerSlidingIdleState : PlayerGroundState
 {
+    
+
     public PlayerSlidingIdleState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -12,11 +14,15 @@ public class PlayerSlidingIdleState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
+        player.cd.size = slidingSize;
+        player.cd.offset = slidingOffset;
     }
 
     public override void Exit()
     {
         base.Exit();
+        player.cd.size = originalSize;
+        player.cd.offset = originalOffset;
     }
 
     public override void FixedUpdate()

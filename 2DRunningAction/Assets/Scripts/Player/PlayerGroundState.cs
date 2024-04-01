@@ -5,6 +5,11 @@ using UnityEngine;
 
 public class PlayerGroundState : PlayerState
 {
+    protected Vector2 slidingSize;
+    protected Vector2 slidingOffset;
+    protected Vector2 originalSize;
+    protected Vector2 originalOffset;
+
     public PlayerGroundState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
     }
@@ -14,6 +19,11 @@ public class PlayerGroundState : PlayerState
         base.Enter();
         player.hasJump = false;
         player.hasSecondJump = false;
+
+        originalSize = player.cd.size;
+        originalOffset = player.cd.offset;
+        slidingSize = new Vector2(0.8f, 1f);
+        slidingOffset = new Vector2(0, -0.8f);
     }
 
     public override void Exit()
@@ -46,5 +56,9 @@ public class PlayerGroundState : PlayerState
             stateMachine.ChangeState(player.airState);
         }
 
+        if (player.CanClimb() && !player.IsWallDetected())
+        {
+            stateMachine.ChangeState(player.climbState);
+        }
     }
 }

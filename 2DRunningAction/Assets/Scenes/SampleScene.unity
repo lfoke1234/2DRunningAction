@@ -786,6 +786,37 @@ Transform:
   - {fileID: 1565681538}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &835137556
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 835137557}
+  m_Layer: 15
+  m_Name: ClimbChecker
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &835137557
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 835137556}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.234, y: 0.509, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 1067538630}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1067538627
 GameObject:
   m_ObjectHideFlags: 0
@@ -837,8 +868,8 @@ CapsuleCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0, y: -0.37906313}
-  m_Size: {x: 0.8, y: 1.8418736}
+  m_Offset: {x: 0, y: -0.8}
+  m_Size: {x: 0.8, y: 1}
   m_Direction: 0
 --- !u!50 &1067538629
 Rigidbody2D:
@@ -883,6 +914,7 @@ Transform:
   - {fileID: 1082344485}
   - {fileID: 1444970272}
   - {fileID: 1210464197}
+  - {fileID: 835137557}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &1067538631
@@ -897,6 +929,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4889540e7a70a1b439788615c0acd3b6, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  knockbackPower: {x: -10, y: 8}
+  bKnockbackPower: {x: -10, y: 8}
   isGround:
     serializedVersion: 2
     m_Bits: 256
@@ -905,11 +939,17 @@ MonoBehaviour:
   wallCheck: {fileID: 1210464197}
   wallCheckSize: {x: 0.53, y: 1.78}
   moveSpeed: 15
+  maxSpeed: 20
+  speedMultiplier: 1.15
+  milestoneIncreaser: 50
+  speedMilestone: 0
   jumpPower: 11
   secondJumpPower: 11
   hasJump: 0
   hasSecondJump: 0
   fallPower: 0.3
+  climbCheck: {fileID: 835137557}
+  climbCheckDistance: 0.3
 --- !u!1 &1082344484
 GameObject:
   m_ObjectHideFlags: 0
@@ -1259,7 +1299,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   levelPart:
   - {fileID: 3791315722941164664, guid: 79053c063119dd74ca8dd313146d4c84, type: 3}
-  - {fileID: 518658039384369432, guid: 1ecc90bdd3799be4c81ace95dfb2d7e6, type: 3}
   nextPartPosition: {x: 0, y: 0, z: 0}
   distanceToSpawn: 20
   distanceToDelete: 20

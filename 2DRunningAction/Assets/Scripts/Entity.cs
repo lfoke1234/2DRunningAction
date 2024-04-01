@@ -9,8 +9,13 @@ public class Entity : MonoBehaviour
     public CapsuleCollider2D cd { get; private set; }
     #endregion
 
+    [Header("KnockBack Info")]
+    public Vector2 knockbackPower;
+    public Vector2 bKnockbackPower;
+    protected bool isKnocked;
+
     [Header ("Collision info")]
-    [SerializeField] private LayerMask isGround;
+    [SerializeField] protected LayerMask isGround;
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckDistance;
     [SerializeField] private Transform wallCheck;
@@ -25,13 +30,14 @@ public class Entity : MonoBehaviour
 
     protected virtual void Start()
     {
+        cd = GetComponent<CapsuleCollider2D>();
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
     }
 
     protected virtual void Update()
     {
-
+        
     }
 
     protected virtual void FixedUpdate()
@@ -91,7 +97,7 @@ public class Entity : MonoBehaviour
     #endregion
 
 
-    private void OnDrawGizmos()
+    protected virtual void OnDrawGizmos()
     {
         Gizmos.color = Color.green;
         Gizmos.DrawLine(groundCheck.position, new Vector3(groundCheck.position.x, groundCheck.position.y - groundCheckDistance));

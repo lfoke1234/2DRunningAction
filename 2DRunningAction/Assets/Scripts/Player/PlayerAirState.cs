@@ -38,5 +38,10 @@ public class PlayerAirState : PlayerState
         {
             player.SetVelocity(rb.velocity.x, rb.velocity.y - player.fallPower);
         }
+
+        if(player.CanClimb() && !player.IsWallDetected())
+        {
+            stateMachine.ChangeState(player.climbState);
+        }
     }
 }
