@@ -5,6 +5,8 @@ using UnityEngine;
 
 public class Player : Entity
 {
+    public static Player instance;
+
     public bool isBKnock;
     public bool test;
 
@@ -25,7 +27,8 @@ public class Player : Entity
     public bool hasSecondJump;
     public float fallPower;
 
-    [SerializeField] private float playerHealth;
+    public float playerMaxHealth;
+    public float playerHealth;
     [SerializeField] private float blinkTime;
 
     [Header("Collision Check")]
@@ -45,7 +48,7 @@ public class Player : Entity
     public PlayerSecondJumpState secondJumpState { get; private set; }
     public PlayerSlidingState slidingState { get; private set; }
     public PlayerSlidingIdleState sIdleState { get; private set; }
-    public PlayerLedgeClimbState climbState { get; private set; }
+    //public PlayerLedgeClimbState climbState { get; private set; }
     //public PlayerWallMoveState wallMoveState { get; private set; }
     public PlayerKnockbackState knockbackState { get; private set; }
     public PlayerBKnockbackState bKncokbackState { get; private set; }
@@ -63,7 +66,7 @@ public class Player : Entity
         secondJumpState = new PlayerSecondJumpState(this, stateMachine, "SJump");
         slidingState = new PlayerSlidingState(this, stateMachine, "Sliding");
         sIdleState = new PlayerSlidingIdleState(this, stateMachine, "SIdle");
-        climbState = new PlayerLedgeClimbState(this, stateMachine, "Climb");
+        //climbState = new PlayerLedgeClimbState(this, stateMachine, "Climb");
         //wallMoveState = new PlayerWallMoveState(this, stateMachine, "WMove");
         knockbackState = new PlayerKnockbackState(this, stateMachine, "Knockback");
         bKncokbackState = new PlayerBKnockbackState(this, stateMachine, "BKnockback");
@@ -80,6 +83,17 @@ public class Player : Entity
 
         defaultSpeed = moveSpeed;
         defaultMilestoneIncrease = milestoneIncreaser;
+
+        if (instance == null)
+        {
+            instance = this;
+            DontDestroyOnLoad(this.gameObject);
+        }
+        else if (instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
     }
 
     protected override void Update()
@@ -91,6 +105,7 @@ public class Player : Entity
 
         if (test)
             moveSpeed = 0;
+
 
         if (!test && Input.GetKeyDown(KeyCode.T))
         {
@@ -163,9 +178,15 @@ public class Player : Entity
         Knockback(isBig);
 
         if (!isBig)
+        {
             playerHealth -= 1;
+            blinkTime = 2;
+        }
         else
+        {
             playerHealth -= 2;
+            blinkTime = 3.5f;
+        }
 
         StartCoroutine(BlinkSprite());
     }

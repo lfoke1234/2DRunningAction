@@ -38,10 +38,10 @@ public class PlayerSecondJumpState : PlayerState
     {
         base.Update();
 
-        if(player.CanClimb() && !player.IsWallDetected())
-        {
-            stateMachine.ChangeState(player.climbState);
-        }
+        //if(player.CanClimb() && !player.IsWallDetected())
+        //{
+        //    stateMachine.ChangeState(player.climbState);
+        //}
     }
 
 }

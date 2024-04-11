@@ -56,10 +56,10 @@ public class PlayerGroundState : PlayerState
             stateMachine.ChangeState(player.airState);
         }
 
-        if (player.CanClimb() && !player.IsWallDetected())
-        {
-            stateMachine.ChangeState(player.climbState);
-        }
+        //if (player.CanClimb() && !player.IsWallDetected())
+        //{
+        //    stateMachine.ChangeState(player.climbState);
+        //}
 
         if (Input.GetKeyDown(KeyCode.G))
         {

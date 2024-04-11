@@ -23,4 +23,22 @@ public class Trap : MonoBehaviour
 
         }
     }
+
+    private void OnTriggerStay2D(Collider2D collision)
+    {
+        Player player = collision.GetComponent<Player>();
+
+        if (player != null)
+        {
+            if (isBig)
+            {
+                player.PlayerDamaged(true);
+            }
+            else if (!isBig)
+            {
+                player.PlayerDamaged(false);
+            }
+
+        }
+    }
 }

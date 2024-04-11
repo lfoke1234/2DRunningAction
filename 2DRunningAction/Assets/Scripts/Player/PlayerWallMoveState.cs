@@ -31,9 +31,9 @@ public class PlayerWallMoveState : PlayerState
     public override void Update()
     {
         base.Update();
-        if (player.CanClimb() == false)
-        {
-            stateMachine.ChangeState(player.climbState);
-        }
+       //if (player.CanClimb() == false)
+       //{
+       //    stateMachine.ChangeState(player.climbState);
+       //}
     }
 }

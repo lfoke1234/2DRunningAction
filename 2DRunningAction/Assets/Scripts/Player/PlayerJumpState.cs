@@ -43,9 +43,9 @@ public class PlayerJumpState : PlayerState
             stateMachine.ChangeState(player.secondJumpState);
         }
 
-        if(player.CanClimb())
-        {
-            stateMachine.ChangeState(player.climbState);
-        }
+        //if(player.CanClimb())
+        //{
+        //    stateMachine.ChangeState(player.climbState);
+        //}
     }
 }
