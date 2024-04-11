@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerSlidingState : PlayerGroundState
 {
-
+    private bool getKey;
 
     public PlayerSlidingState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -13,6 +13,8 @@ public class PlayerSlidingState : PlayerGroundState
         base.Enter();
         player.cd.size = slidingSize;
         player.cd.offset = slidingOffset;
+
+        getKey = false;
     }
 
     public override void Exit()
@@ -32,14 +34,22 @@ public class PlayerSlidingState : PlayerGroundState
     {
         base.Update();
 
-        if (Input.GetKeyUp(KeyCode.S))
-        {
-            stateMachine.ChangeState(player.runState);
-        }
+        // if (Input.GetKeyUp(KeyCode.S))
+        // {
+        //     stateMachine.ChangeState(player.runState);
+        // }
 
         if (triggerCalled)
         {
-            stateMachine.ChangeState(player.slidingState);
+            stateMachine.ChangeState(player.sIdleState);
         }
+
+        if (Input.GetKeyUp(KeyCode.S))
+        {
+            getKey = true;
+        }
+
+        if (getKey == true && player.CanStanding() == false)
+            stateMachine.ChangeState(player.runState);
     }
 }

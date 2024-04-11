@@ -5,7 +5,7 @@ using UnityEngine;
 
 public class PlayerSlidingIdleState : PlayerGroundState
 {
-    
+    // private bool getKey;
 
     public PlayerSlidingIdleState(Player player, PlayerStateMachine stateMachine, string animBoolName) : base(player, stateMachine, animBoolName)
     {
@@ -16,6 +16,7 @@ public class PlayerSlidingIdleState : PlayerGroundState
         base.Enter();
         player.cd.size = slidingSize;
         player.cd.offset = slidingOffset;
+        // getKey = false;
     }
 
     public override void Exit()
@@ -23,6 +24,8 @@ public class PlayerSlidingIdleState : PlayerGroundState
         base.Exit();
         player.cd.size = originalSize;
         player.cd.offset = originalOffset;
+
+        // getKey = true;
     }
 
     public override void FixedUpdate()
@@ -36,14 +39,15 @@ public class PlayerSlidingIdleState : PlayerGroundState
     {
         base.Update();
 
-        if (Input.GetKeyUp(KeyCode.S))
-        {
-            stateMachine.ChangeState(player.runState);
-        }
+        // Debug.Log(getKey);
+        // 
+        // if (Input.GetKeyUp(KeyCode.S))
+        // {
+        //     getKey = true;
+        // }
+        // 
+        // if (getKey == true && player.CanStanding() == false)
+        //     stateMachine.ChangeState(player.runState);
 
-        if (triggerCalled)
-        {
-            stateMachine.ChangeState(player.sIdleState);
-        }
     }
 }

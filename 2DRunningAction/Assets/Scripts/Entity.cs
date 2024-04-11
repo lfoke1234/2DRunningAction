@@ -7,12 +7,13 @@ public class Entity : MonoBehaviour
     public Rigidbody2D rb { get; private set; }
     public Animator anim { get; private set; }
     public CapsuleCollider2D cd { get; private set; }
+    public FXEntity fx { get; private set; }
     #endregion
 
     [Header("KnockBack Info")]
     public Vector2 knockbackPower;
     public Vector2 bKnockbackPower;
-    protected bool isKnocked;
+    [SerializeField] protected bool isKnocked;
 
     [Header ("Collision info")]
     [SerializeField] protected LayerMask isGround;
@@ -33,6 +34,7 @@ public class Entity : MonoBehaviour
         cd = GetComponent<CapsuleCollider2D>();
         anim = GetComponentInChildren<Animator>();
         rb = GetComponent<Rigidbody2D>();
+        fx = GetComponent<FXEntity>();
     }
 
     protected virtual void Update()

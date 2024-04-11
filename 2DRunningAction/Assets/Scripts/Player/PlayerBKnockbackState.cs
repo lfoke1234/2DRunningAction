@@ -13,13 +13,12 @@ public class PlayerBKnockbackState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        player.Knockback(true);
+        player.TakeDamage(true);
     }
 
     public override void Exit()
     {
         base.Exit();
-        isKnocked = false;
     }
 
     public override void FixedUpdate()
@@ -34,6 +33,7 @@ public class PlayerBKnockbackState : PlayerState
         if (player.IsGroundDetected() && isKnocked)
         {
             player.SetZeroVeolcity();
+            isKnocked = false;
         }
     }
 
@@ -42,7 +42,6 @@ public class PlayerBKnockbackState : PlayerState
         base.Update();
         if (triggerCalled)
         {
-            player.CancelKnockback();
             stateMachine.ChangeState(player.runState);
         }
     }

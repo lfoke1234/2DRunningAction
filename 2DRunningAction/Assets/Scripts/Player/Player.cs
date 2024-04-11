@@ -5,6 +5,9 @@ using UnityEngine;
 
 public class Player : Entity
 {
+    public bool isBKnock;
+    public bool test;
+
     [Header("Move Info")]
     public float moveSpeed;
     [SerializeField] private float maxSpeed;
@@ -22,8 +25,15 @@ public class Player : Entity
     public bool hasSecondJump;
     public float fallPower;
 
+    [SerializeField] private float playerHealth;
+    [SerializeField] private float blinkTime;
+
+    [Header("Collision Check")]
     [SerializeField] private Transform climbCheck;
     [SerializeField] private float climbCheckDistance;
+
+    [SerializeField] private Transform standingCheck; 
+    [SerializeField] private float standCheckDistance;
 
     #region State
     public PlayerStateMachine stateMachine { get; private set; }
@@ -39,6 +49,7 @@ public class Player : Entity
     //public PlayerWallMoveState wallMoveState { get; private set; }
     public PlayerKnockbackState knockbackState { get; private set; }
     public PlayerBKnockbackState bKncokbackState { get; private set; }
+    public PlayerDeadState deadState { get; private set; }
     #endregion
 
     protected override void Awake()
@@ -56,6 +67,7 @@ public class Player : Entity
         //wallMoveState = new PlayerWallMoveState(this, stateMachine, "WMove");
         knockbackState = new PlayerKnockbackState(this, stateMachine, "Knockback");
         bKncokbackState = new PlayerBKnockbackState(this, stateMachine, "BKnockback");
+        deadState = new PlayerDeadState(this, stateMachine, "Dead");
     }
 
     protected override void Start()
@@ -76,6 +88,19 @@ public class Player : Entity
 
         stateMachine.currentState.Update();
         SpeedController();
+
+        if (test)
+            moveSpeed = 0;
+
+        if (!test && Input.GetKeyDown(KeyCode.T))
+        {
+            test = true;
+        }
+        else if (test && Input.GetKeyDown(KeyCode.T))
+        {
+            test = false;
+        }
+        
     }
 
     protected override void FixedUpdate()
@@ -83,7 +108,11 @@ public class Player : Entity
         stateMachine.currentState.FixedUpdate();
     }
 
+    #region Collision
     public virtual bool CanClimb() => Physics2D.Raycast(climbCheck.position, Vector2.right * facingDir, climbCheckDistance, isGround);
+
+    public bool CanStanding() => Physics2D.Raycast(standingCheck.position, Vector2.up, standCheckDistance, isGround);
+    #endregion
 
     public void AnimationTrigger() => stateMachine.currentState.AnimationFinishTrigger();
 
@@ -113,6 +142,7 @@ public class Player : Entity
     }
     #endregion
 
+    #region Damage
     public void Knockback(bool isBig)
     {
         isKnocked = true;
@@ -127,13 +157,54 @@ public class Player : Entity
         }
     }
 
+    public void TakeDamage(bool isBig)
+    {
+        SpeedReset();
+        Knockback(isBig);
+
+        if (!isBig)
+            playerHealth -= 1;
+        else
+            playerHealth -= 2;
+
+        StartCoroutine(BlinkSprite());
+    }
+
+    public IEnumerator BlinkSprite()
+    {
+        // TakeDamage(value);
+        fx.InvokeRepeating("GrayColorBlink", 0, 0.1f);
+        yield return new WaitForSeconds(blinkTime);
+        isKnocked = false;
+        fx.CancelColorChange();
+        
+    }
+    #endregion
 
     public void CancelKnockback() => isKnocked = false;
+
+    public void PlayerDamaged(bool isBig)
+    {
+        if (isKnocked)
+            return;
+
+        if (isBig)
+        {
+            stateMachine.ChangeState(bKncokbackState);
+        }
+        else if (!isBig)
+        {
+            stateMachine.ChangeState(knockbackState);
+        }
+    }
 
     protected override void OnDrawGizmos()
     {
         base.OnDrawGizmos();
         Gizmos.color = Color.yellow;
         Gizmos.DrawLine(climbCheck.position, new Vector3(climbCheck.position.x + climbCheckDistance, climbCheck.position.y));
+
+        Gizmos.color = Color.red;
+        Gizmos.DrawLine(standingCheck.position, new Vector3(standingCheck.position.x, standingCheck.position.y + standCheckDistance));
     }
 }

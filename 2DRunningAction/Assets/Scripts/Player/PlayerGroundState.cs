@@ -22,7 +22,7 @@ public class PlayerGroundState : PlayerState
 
         originalSize = player.cd.size;
         originalOffset = player.cd.offset;
-        slidingSize = new Vector2(0.8f, 1f);
+        slidingSize = new Vector2(0.75f, 0.8f);
         slidingOffset = new Vector2(0, -0.8f);
     }
 
@@ -59,6 +59,15 @@ public class PlayerGroundState : PlayerState
         if (player.CanClimb() && !player.IsWallDetected())
         {
             stateMachine.ChangeState(player.climbState);
+        }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            stateMachine.ChangeState(player.knockbackState);
+        }
+        if (Input.GetKeyDown(KeyCode.F))
+        {
+            stateMachine.ChangeState(player.bKncokbackState);
         }
     }
 }

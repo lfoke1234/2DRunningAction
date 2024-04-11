@@ -11,7 +11,7 @@ public class PlayerKnockbackState : PlayerState
     public override void Enter()
     {
         base.Enter();
-        player.Knockback(false);
+        player.TakeDamage(false);
     }
 
     public override void Exit()
@@ -30,7 +30,6 @@ public class PlayerKnockbackState : PlayerState
 
         if (triggerCalled )
         {
-            player.CancelKnockback();
             stateMachine.ChangeState(player.runState);
         }
     }
