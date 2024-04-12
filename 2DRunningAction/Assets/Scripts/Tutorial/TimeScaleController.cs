@@ -43,4 +43,9 @@ public class TimeScaleController : MonoBehaviour
     {
         Application.Quit();
     }
+
+    public void ResetPlayer()
+    {
+        PlayerManager.instance.player.GetComponent<Player>().ResetPlayer();
+    }
 }

@@ -24,6 +24,7 @@ public class GameManager : MonoBehaviour
             instance = this;
             DontDestroyOnLoad(this.gameObject);
             SceneManager.sceneLoaded += OnSceneLoaded;
+            SceneManager.sceneLoaded += OnSceneLoadAudio;
         }
         else if (instance != this)
         {
@@ -50,9 +51,23 @@ public class GameManager : MonoBehaviour
         {
             endPos = endPosObject.transform;
         }
-        else
+
+
+    }
+
+    private void OnSceneLoadAudio(Scene scene, LoadSceneMode mode)
+    {
+        switch (scene.buildIndex)
         {
-            Debug.Log("Don't find EndPos");
+            case 0:
+                AudioManager.instance.PlayBGM(1);
+                break;
+            case 1:
+                AudioManager.instance.PlayBGM(0);
+                break;
+            case 2:
+                AudioManager.instance.PlayBGM(0);
+                break;
         }
     }
 

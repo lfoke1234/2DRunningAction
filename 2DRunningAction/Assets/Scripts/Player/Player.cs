@@ -7,6 +7,7 @@ public class Player : Entity
 {
     public static Player instance;
 
+    public bool isDead;
     public bool isBKnock;
     public bool test;
 
@@ -226,14 +227,21 @@ public class Player : Entity
         fx.CancelColorChange();
 
     }
-    #endregion
 
     public void CancelKnockback() => isKnocked = false;
 
     public void PlayerDamaged(bool isBig)
     {
-        if (isKnocked || test)
+        if (isKnocked || test || isDead)
             return;
+
+        if (playerHealth <= 0)
+        {
+            Die();
+            return;
+        }
+
+        AudioManager.instance.PlaySFX(2);
 
         if (isBig)
         {
@@ -244,6 +252,17 @@ public class Player : Entity
             stateMachine.ChangeState(knockbackState);
         }
     }
+
+    public void ResetPlayer()
+    {
+        stateMachine.ChangeState(runState);
+    }
+
+    public void Die()
+    {
+        stateMachine.ChangeState(deadState);
+    }
+    #endregion
 
     protected override void OnDrawGizmos()
     {

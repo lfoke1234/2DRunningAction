@@ -14,7 +14,6 @@ public class InGameUI : MonoBehaviour
     private void Start()
     {
         player = PlayerManager.instance.player;
-        Debug.Log("load ingame");
 
         if (hpSlider != null)
         {

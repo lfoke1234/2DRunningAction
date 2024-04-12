@@ -11,7 +11,12 @@ public class PlayerDeadState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        player.isDead = true;
+
         player.SetZeroVeolcity();
+        AudioManager.instance.PlaySFX(5);
+
+        GameObject.Find("DeadUI").GetComponent<DeadUI>().SetDeadUI();
     }
 
     public override void Exit()

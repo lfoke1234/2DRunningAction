@@ -9,6 +9,7 @@ public class PlayerRunState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
+        player.isDead = false;
     }
 
     public override void Exit()

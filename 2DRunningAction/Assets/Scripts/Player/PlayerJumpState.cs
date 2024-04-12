@@ -10,6 +10,7 @@ public class PlayerJumpState : PlayerState
     public override void Enter()
     {
         base.Enter();
+        AudioManager.instance.PlaySFX(1);
         player.SetVelocity(rb.velocity.x, player.jumpPower);
         player.hasJump = true;
     }
