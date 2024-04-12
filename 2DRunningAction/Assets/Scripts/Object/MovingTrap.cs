@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MovingTrap : Trap
@@ -13,7 +11,7 @@ public class MovingTrap : Trap
 
     private void Start()
     {
-        
+
 
     }
 
@@ -21,7 +19,7 @@ public class MovingTrap : Trap
     {
         transform.position = Vector3.MoveTowards(transform.position, movePoint[i].position, speed * Time.deltaTime);
 
-        if(Vector2.Distance(transform.position, movePoint[i].position) < 0.25f)
+        if (Vector2.Distance(transform.position, movePoint[i].position) < 0.25f)
         {
             i++;
 

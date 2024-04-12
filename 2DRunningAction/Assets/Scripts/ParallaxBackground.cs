@@ -1,13 +1,11 @@
- using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class ParallaxbackGround : MonoBehaviour
 {
     private GameObject cam;
-    
+
     [SerializeField] private float parallaxEffect;
-    
+
     private float xPosition;
     private float length;
 

@@ -1,7 +1,4 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
-using UnityEngine.SceneManagement;
 
 public class LevelCreater : MonoBehaviour
 {
@@ -10,7 +7,7 @@ public class LevelCreater : MonoBehaviour
 
     [SerializeField] private float distanceToSpawn;
     [SerializeField] private float distanceToDelete;
-     private Transform player;
+    private Transform player;
 
     void Start()
     {
@@ -25,7 +22,7 @@ public class LevelCreater : MonoBehaviour
 
     private void CreatePlatform()
     {
-        while(Vector2.Distance(player.transform.position, nextPartPosition) < distanceToSpawn)
+        while (Vector2.Distance(player.transform.position, nextPartPosition) < distanceToSpawn)
         {
             Transform part = levelPart[Random.Range(0, levelPart.Length)];
 
@@ -42,7 +39,7 @@ public class LevelCreater : MonoBehaviour
         {
             Transform partToDelete = transform.GetChild(0);
 
-            if (Vector2.Distance(player.transform.position, partToDelete.transform.position) >  distanceToDelete)
+            if (Vector2.Distance(player.transform.position, partToDelete.transform.position) > distanceToDelete)
             {
                 Destroy(partToDelete.gameObject);
             }

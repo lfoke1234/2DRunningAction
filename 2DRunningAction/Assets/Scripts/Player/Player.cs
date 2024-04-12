@@ -1,7 +1,7 @@
 using System.Collections;
-using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class Player : Entity
 {
@@ -9,6 +9,8 @@ public class Player : Entity
 
     public bool isBKnock;
     public bool test;
+
+    private Toggle toggle;
 
     [Header("Move Info")]
     public float moveSpeed;
@@ -35,8 +37,10 @@ public class Player : Entity
     [SerializeField] private Transform climbCheck;
     [SerializeField] private float climbCheckDistance;
 
-    [SerializeField] private Transform standingCheck; 
+    [SerializeField] private Transform standingCheck;
     [SerializeField] private float standCheckDistance;
+
+    public System.Action onHealthChanged;
 
     #region State
     public PlayerStateMachine stateMachine { get; private set; }
@@ -71,6 +75,8 @@ public class Player : Entity
         knockbackState = new PlayerKnockbackState(this, stateMachine, "Knockback");
         bKncokbackState = new PlayerBKnockbackState(this, stateMachine, "BKnockback");
         deadState = new PlayerDeadState(this, stateMachine, "Dead");
+
+        SceneManager.sceneLoaded += OnSceneLoaded;
     }
 
     protected override void Start()
@@ -94,28 +100,40 @@ public class Player : Entity
             Destroy(this.gameObject);
             return;
         }
+
+    }
+
+    private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
+    {
+        GameObject toggleGameObject = GameObject.Find("Toggle");
+        if (toggleGameObject != null)
+        {
+            toggle = toggleGameObject.GetComponent<Toggle>();
+            if (toggle != null)
+            {
+                toggle.onValueChanged.AddListener(ToggleTest);
+            }
+            else
+            {
+                Debug.LogError("Toggle 컴포넌트가 게임 오브젝트에 없습니다.");
+            }
+        }
+        else
+        {
+        }
     }
 
     protected override void Update()
     {
         base.Update();
 
+        if (Time.timeScale == 0.0f)
+            return;
+
         stateMachine.currentState.Update();
         SpeedController();
 
-        if (test)
-            moveSpeed = 0;
 
-
-        if (!test && Input.GetKeyDown(KeyCode.T))
-        {
-            test = true;
-        }
-        else if (test && Input.GetKeyDown(KeyCode.T))
-        {
-            test = false;
-        }
-        
     }
 
     protected override void FixedUpdate()
@@ -137,7 +155,7 @@ public class Player : Entity
         if (moveSpeed == maxSpeed)
             return;
 
-        if(transform.position.x > speedMilestone)
+        if (transform.position.x > speedMilestone)
         {
             speedMilestone = speedMilestone + milestoneIncreaser;
 
@@ -150,7 +168,7 @@ public class Player : Entity
 
     }
 
-    private void SpeedReset()
+    public void SpeedReset()
     {
         moveSpeed = defaultSpeed;
         milestoneIncreaser = defaultMilestoneIncrease;
@@ -158,6 +176,11 @@ public class Player : Entity
     #endregion
 
     #region Damage
+    public void ToggleTest(bool toggleState)
+    {
+        test = toggleState;
+    }
+
     public void Knockback(bool isBig)
     {
         isKnocked = true;
@@ -166,7 +189,7 @@ public class Player : Entity
         {
             rb.velocity = knockbackPower;
         }
-        else if(isBig)
+        else if (isBig)
         {
             rb.velocity = bKnockbackPower;
         }
@@ -188,6 +211,9 @@ public class Player : Entity
             blinkTime = 3.5f;
         }
 
+        if (onHealthChanged != null)
+            onHealthChanged();
+
         StartCoroutine(BlinkSprite());
     }
 
@@ -198,7 +224,7 @@ public class Player : Entity
         yield return new WaitForSeconds(blinkTime);
         isKnocked = false;
         fx.CancelColorChange();
-        
+
     }
     #endregion
 
@@ -206,7 +232,7 @@ public class Player : Entity
 
     public void PlayerDamaged(bool isBig)
     {
-        if (isKnocked)
+        if (isKnocked || test)
             return;
 
         if (isBig)

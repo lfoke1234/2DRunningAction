@@ -1,12 +1,13 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
-    private bool isPlayTutorial;
+    public bool isPlayTutorial;
+
+    public bool unlockScene1;
+    public bool unlockScene2;
 
     private Player player;
     private Transform endPos;
@@ -38,8 +39,8 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
-        Debug.Log("load ingame");
         player = PlayerManager.instance.player;
+        Load();
     }
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
@@ -67,35 +68,60 @@ public class GameManager : MonoBehaviour
     public void SetTimeScale1() => Time.timeScale = 1.0f;
 
     #region Scene
-    public void EndTutorial()
-    {
-        isPlayTutorial = true;
-        energy = 0;
-        LoadScene02();
-    }
 
     public void StartGame()
     {
         if (isPlayTutorial == false)
         {
-            player.transform.position = new Vector3(0f, 1.6f, 0f);
-            player.playerMaxHealth = 99999f;
-            player.playerHealth = 99999f;
-            SceneManager.LoadScene(1);
+            LoadTutorial();
         }
         else
         {
-            player.playerMaxHealth = 20f;
-            player.playerHealth = 20f;
             LoadScene02();
         }
     }
 
+    public void LoadTutorial()
+    {
+        player.SpeedReset();
+        energy = 0;
+        player.transform.position = new Vector3(0f, 1.6f, 0f);
+        player.playerMaxHealth = 99999f;
+        player.playerHealth = 99999f;
+        SceneManager.LoadScene(1);
+    }
+
+    public void EndTutorial()
+    {
+        isPlayTutorial = true;
+        energy = 0;
+        SceneManager.LoadScene(0);
+    }
+
     private void LoadScene02()
     {
+        player.SpeedReset();
+        energy = 0;
+        player.playerMaxHealth = 20f;
+        player.playerHealth = 20f;
         player.transform.position = new Vector3(0f, 1.6f, 0f);
-        endPos.transform.position = new Vector3(181f, 11f, 0f);
         SceneManager.LoadScene(2);
     }
     #endregion
+
+    private void Save()
+    {
+        PlayerPrefs.SetInt("IsPlayTutorial", isPlayTutorial ? 1 : 0);
+        PlayerPrefs.SetInt("UnlockScene1", unlockScene1 ? 1 : 0);
+        PlayerPrefs.SetInt("UnlockScene2", unlockScene2 ? 1 : 0);
+        PlayerPrefs.Save();
+    }
+
+    private void Load()
+    {
+        isPlayTutorial = PlayerPrefs.GetInt("IsPlayTutorial", 0) == 1;
+        unlockScene1 = PlayerPrefs.GetInt("UnlockScene1", 0) == 1;
+        unlockScene2 = PlayerPrefs.GetInt("UnlockScene2", 0) == 1;
+    }
+
 }

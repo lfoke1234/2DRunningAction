@@ -22,6 +22,11 @@ public class PlayerJumpState : PlayerState
     public override void FixedUpdate()
     {
         base.FixedUpdate();
+        if (rb.velocity.x <= .1f)
+        {
+            player.SetVelocity(player.moveSpeed, rb.velocity.y);
+        }
+
         if (rb.velocity.y < 0)
         {
             stateMachine.ChangeState(player.airState);
