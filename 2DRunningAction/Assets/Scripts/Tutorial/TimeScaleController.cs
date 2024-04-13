@@ -48,4 +48,9 @@ public class TimeScaleController : MonoBehaviour
     {
         PlayerManager.instance.player.GetComponent<Player>().ResetPlayer();
     }
+
+    public void TogglePlayer(bool value)
+    {
+        PlayerManager.instance.player.GetComponent<Player>().ToggleTest(value);
+    }
 }

@@ -1,11 +1,19 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Audio;
 using UnityEngine.SceneManagement;
 
 public class AudioManager : MonoBehaviour
 {
     public static AudioManager instance;
+
+    [SerializeField] private AudioMixer audioMixer;
+    [SerializeField] private string bgmParameter;
+    [SerializeField] private string sfxParameter;
+
+    public bool bgmActive;
+    public bool sfxActive;
 
     [SerializeField] private AudioSource[] sfx;
     [SerializeField] private AudioSource[] bgm;
@@ -63,6 +71,26 @@ public class AudioManager : MonoBehaviour
         {
             bgm[i].Stop();
         }
+    }
+
+    public void ToggleBGM(bool value)
+    {
+        bgmActive = value;
+
+        if (bgmActive)
+            audioMixer.SetFloat(bgmParameter, 0f);
+        else
+            audioMixer.SetFloat(bgmParameter, -80f);
+    }
+
+    public void ToggleSFX(bool value)
+    {
+        sfxActive = value;
+
+        if (sfxActive)
+            audioMixer.SetFloat(sfxParameter, 0f);
+        else
+            audioMixer.SetFloat(sfxParameter, -80f);
     }
 
 }
