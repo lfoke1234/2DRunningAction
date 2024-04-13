@@ -40,6 +40,9 @@ public class GameManager : MonoBehaviour
 
     private void Start()
     {
+        QualitySettings.vSyncCount = 0;
+        Application.targetFrameRate = 120;
+
         player = PlayerManager.instance.player;
         Load();
     }
@@ -110,10 +113,11 @@ public class GameManager : MonoBehaviour
     {
         isPlayTutorial = true;
         energy = 0;
+        Save();
         SceneManager.LoadScene(0);
     }
 
-    private void LoadScene02()
+    public void LoadScene02()
     {
         player.SpeedReset();
         energy = 0;
@@ -124,7 +128,8 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
-    private void Save()
+    #region save and load
+    public void Save()
     {
         PlayerPrefs.SetInt("IsPlayTutorial", isPlayTutorial ? 1 : 0);
         PlayerPrefs.SetInt("UnlockScene1", unlockScene1 ? 1 : 0);
@@ -139,4 +144,15 @@ public class GameManager : MonoBehaviour
         unlockScene2 = PlayerPrefs.GetInt("UnlockScene2", 0) == 1;
     }
 
+    public void DeleteSpecificSaveData()
+    {
+        PlayerPrefs.DeleteKey("IsPlayTutorial");
+        isPlayTutorial = false;
+        PlayerPrefs.DeleteKey("UnlockScene1");
+        unlockScene1 = false; 
+        PlayerPrefs.DeleteKey("UnlockScene2");
+        unlockScene2 = false;
+        PlayerPrefs.Save();
+    }
+    #endregion
 }

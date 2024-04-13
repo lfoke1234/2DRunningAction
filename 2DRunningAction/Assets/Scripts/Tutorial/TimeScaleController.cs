@@ -34,6 +34,11 @@ public class TimeScaleController : MonoBehaviour
         GameManager.instance.LoadTutorial();
     }
 
+    public void LoadScene02()
+    {
+        GameManager.instance.LoadScene02();
+    }
+
     public void GoTitle()
     {
         SceneManager.LoadScene(0);
@@ -52,5 +57,11 @@ public class TimeScaleController : MonoBehaviour
     public void TogglePlayer(bool value)
     {
         PlayerManager.instance.player.GetComponent<Player>().ToggleTest(value);
+    }
+
+    
+    public void DeleteSave()
+    {
+        GameManager.instance.DeleteSpecificSaveData();
     }
 }

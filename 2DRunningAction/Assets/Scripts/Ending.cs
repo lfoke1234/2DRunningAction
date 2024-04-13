@@ -22,5 +22,7 @@ public class Ending : MonoBehaviour
                 Scene2.SetActive(true);
             }
         }
+
+        GameManager.instance.Save();
     }
 }
