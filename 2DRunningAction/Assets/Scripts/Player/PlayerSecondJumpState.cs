@@ -33,6 +33,11 @@ public class PlayerSecondJumpState : PlayerState
         {
             player.SetVelocity(rb.velocity.x, rb.velocity.y - player.fallPower);
         }
+
+        if (player.SlidButton())
+        {
+            player.SetVelocity(rb.velocity.x, rb.velocity.y - player.fallPower);
+        }
     }
 
     public override void Update()

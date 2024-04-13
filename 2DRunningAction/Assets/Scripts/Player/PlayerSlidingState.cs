@@ -44,6 +44,11 @@ public class PlayerSlidingState : PlayerGroundState
             stateMachine.ChangeState(player.sIdleState);
         }
 
+        if (player.SlidButton() == false)
+        {
+            getKey = true;
+        }
+
         if (Input.GetKeyUp(KeyCode.S))
         {
             getKey = true;

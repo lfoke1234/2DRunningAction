@@ -17,6 +17,7 @@ public class PlayerGroundState : PlayerState
     public override void Enter()
     {
         base.Enter();
+
         player.hasJump = false;
         player.hasSecondJump = false;
 
@@ -40,11 +41,25 @@ public class PlayerGroundState : PlayerState
     public override void Update()
     {
         base.Update();
+
+        if (player.JumpButton() && player.IsGroundDetected())
+        {
+            if (player.hasJump == false)
+                stateMachine.ChangeState(player.jumpState);
+        }
+
+
         if (Input.GetKeyDown(KeyCode.Space) && player.IsGroundDetected())
         {
             if (player.hasJump == false)
                 stateMachine.ChangeState(player.jumpState);
         }
+
+        if (player.SlidButton() && player.IsGroundDetected())
+        {
+            stateMachine.ChangeState(player.slidingState);
+        }
+
 
         if (Input.GetKey(KeyCode.S) && player.IsGroundDetected())
         {
@@ -60,14 +75,5 @@ public class PlayerGroundState : PlayerState
         //{
         //    stateMachine.ChangeState(player.climbState);
         //}
-
-        if (Input.GetKeyDown(KeyCode.G))
-        {
-            stateMachine.ChangeState(player.knockbackState);
-        }
-        if (Input.GetKeyDown(KeyCode.F))
-        {
-            stateMachine.ChangeState(player.bKncokbackState);
-        }
     }
 }

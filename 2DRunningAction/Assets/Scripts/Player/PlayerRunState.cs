@@ -9,6 +9,8 @@ public class PlayerRunState : PlayerGroundState
     public override void Enter()
     {
         base.Enter();
+        player.getJumpKey = false;
+        player.getSecondJumpKey = false;
         player.isDead = false;
     }
 

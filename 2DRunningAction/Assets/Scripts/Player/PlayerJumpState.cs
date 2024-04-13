@@ -37,12 +37,21 @@ public class PlayerJumpState : PlayerState
         {
             player.SetVelocity(rb.velocity.x, rb.velocity.y - player.fallPower);
         }
+
+        if (player.SlidButton())
+        {
+            player.SetVelocity(rb.velocity.x, rb.velocity.y - player.fallPower);
+        }
     }
 
     public override void Update()
     {
         base.Update();
-        
+
+        if (player.hasSecondJump == false && player.SecondJumpButton())
+        {
+            stateMachine.ChangeState(player.secondJumpState);
+        }
 
         if (player.hasSecondJump == false && Input.GetKeyDown(KeyCode.Space))
         {

@@ -30,6 +30,10 @@ public class Player : Entity
     public bool hasSecondJump;
     public float fallPower;
 
+    public bool getJumpKey;
+    public bool getSecondJumpKey;
+    public bool getSlidKey;
+
     public float playerMaxHealth;
     public float playerHealth;
     [SerializeField] private float blinkTime;
@@ -123,6 +127,8 @@ public class Player : Entity
         {
         }
     }
+
+    
 
     protected override void Update()
     {
@@ -253,6 +259,44 @@ public class Player : Entity
         }
     }
 
+    #region Mobile Input
+    public bool JumpButton()
+    {
+        if (getJumpKey)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool SecondJumpButton()
+    {
+        if (getSecondJumpKey)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+    
+    public bool SlidButton()
+    {
+        if (getSlidKey)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    #endregion
     public void ResetPlayer()
     {
         stateMachine.ChangeState(runState);

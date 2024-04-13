@@ -33,12 +33,23 @@ public class PlayerAirState : PlayerState
         if (player.IsGroundDetected())
             stateMachine.ChangeState(player.runState);
 
+
+        if (player.hasSecondJump == false && player.SecondJumpButton())
+        {
+            stateMachine.ChangeState(player.secondJumpState);
+        }
+
         if (player.hasSecondJump == false && Input.GetKeyDown(KeyCode.Space))
         {
             stateMachine.ChangeState(player.secondJumpState);
         }
 
         if (Input.GetKey(KeyCode.S))
+        {
+            player.SetVelocity(rb.velocity.x, rb.velocity.y - player.fallPower);
+        }
+
+        if (player.SlidButton())
         {
             player.SetVelocity(rb.velocity.x, rb.velocity.y - player.fallPower);
         }
