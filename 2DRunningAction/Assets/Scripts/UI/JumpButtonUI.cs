@@ -7,7 +7,7 @@ public class JumpButtonUI : MonoBehaviour, IPointerDownHandler, IPointerUpHandle
     {
         Player player = PlayerManager.instance.player;
 
-        if (player.getJumpKey)
+        if (player.getJumpKey || player.IsGroundDetected() == false)
         {
             player.getSecondJumpKey = true;
         }

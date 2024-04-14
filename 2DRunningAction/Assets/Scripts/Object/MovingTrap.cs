@@ -2,12 +2,15 @@ using UnityEngine;
 
 public class MovingTrap : Trap
 {
+    public bool canMove;
+
     [SerializeField] private float speed;
     [SerializeField] private float rotationSpeed;
     [SerializeField] private Transform[] movePoint;
     [SerializeField] private bool canRotate;
 
     private int i;
+
 
     private void Start()
     {
@@ -17,6 +20,9 @@ public class MovingTrap : Trap
 
     private void Update()
     {
+        if (canMove == false)
+            return;
+
         transform.position = Vector3.MoveTowards(transform.position, movePoint[i].position, speed * Time.deltaTime);
 
         if (Vector2.Distance(transform.position, movePoint[i].position) < 0.25f)

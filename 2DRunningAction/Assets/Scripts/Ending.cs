@@ -11,12 +11,12 @@ public class Ending : MonoBehaviour
         {
             Time.timeScale = 0f;
 
-            if (GameManager.instance.energy < 100)
+            if (GameManager.instance.energy < 60)
             {
                 GameManager.instance.unlockScene1 = true;
                 Scene1.SetActive(true);
             }
-            else if (GameManager.instance.energy >= 100)
+            else if (GameManager.instance.energy >= 60)
             {
                 GameManager.instance.unlockScene2 = true;
                 Scene2.SetActive(true);

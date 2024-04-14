@@ -121,8 +121,8 @@ public class GameManager : MonoBehaviour
     {
         player.SpeedReset();
         energy = 0;
-        player.playerMaxHealth = 20f;
-        player.playerHealth = 20f;
+        player.playerMaxHealth = 15f;
+        player.playerHealth = 15f;
         player.transform.position = new Vector3(0f, 1.6f, 0f);
         SceneManager.LoadScene(2);
     }

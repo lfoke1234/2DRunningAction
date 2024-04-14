@@ -118,10 +118,6 @@ public class Player : Entity
             {
                 toggle.onValueChanged.AddListener(ToggleTest);
             }
-            else
-            {
-                Debug.LogError("Toggle 컴포넌트가 게임 오브젝트에 없습니다.");
-            }
         }
         else
         {

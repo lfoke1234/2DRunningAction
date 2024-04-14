@@ -6599,7 +6599,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "\uC5D0\uB108\uC9C0 100 \uC774\uC0C1\uC73C\uB85C \uD074\uB9AC\uC5B4\uC2DC
+  m_text: "\uC5D0\uB108\uC9C0 60 \uC774\uC0C1\uC73C\uB85C \uD074\uB9AC\uC5B4\uC2DC
     \uC5B8\uB77D"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 655bf0b17cb83984c9b5dc8801d7180e, type: 2}
@@ -6627,8 +6627,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 150
-  m_fontSizeBase: 150
+  m_fontSize: 140
+  m_fontSizeBase: 140
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -8009,6 +8009,14 @@ PrefabInstance:
     - target: {fileID: 530891266059330858, guid: 4601041afd1abc445b1beef650e409b7, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664760093818296347, guid: 4601041afd1abc445b1beef650e409b7, type: 3}
+      propertyPath: moveSpeed
+      value: 8.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 2664760093818296347, guid: 4601041afd1abc445b1beef650e409b7, type: 3}
+      propertyPath: speedMultiplier
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 5323562192605914599, guid: 4601041afd1abc445b1beef650e409b7, type: 3}
       propertyPath: m_Name
