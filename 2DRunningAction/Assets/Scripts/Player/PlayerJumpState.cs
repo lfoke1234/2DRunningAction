@@ -38,7 +38,7 @@ public class PlayerJumpState : PlayerState
             player.SetVelocity(rb.velocity.x, rb.velocity.y - player.fallPower);
         }
 
-        if (player.SlidButton())
+        if (player.SlidButton() && player.CanStanding())
         {
             stateMachine.ChangeState(player.airState);
             //player.SetVelocity(rb.velocity.x, rb.velocity.y - player.fallPower);
